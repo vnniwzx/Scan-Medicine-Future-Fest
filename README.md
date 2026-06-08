@@ -1,1 +1,3 @@
-# Scan-Medicine-Future-Fest
+O projeto Scan Medicine é um aplicativo para dispositivos móveis usado para auxiliar usuários com dificuldades em interpretar e ler as bulas de remédio, além de indicar farmácias mais próximas e com os melhores preço do remédio que o usuário deseja encontrar.
+Nós temos colaboração com a Eurofarma, na qual é uma multinacional brasileira presente em 24 países, tem mais de 50 anos de história e o propósito de tornar a saúde acessível para que as pessoas possam viver mais e melhor. Com mais de 13 mil profissionais, atuam em todos os principais segmentos farmacêuticos e são líderes em receituário médico no Brasil.
+Nosso próposito é deixar aquilo que o usuário mais vê dificuldade em questão ao remédio e ajudá-lo.
