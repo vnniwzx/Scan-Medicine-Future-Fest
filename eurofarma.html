@@ -27,7 +27,7 @@
                 <div class="brand-hero">
                     <img src="logo.png" class="brand-logo-lg" alt="Scan Medicine Logo">
                     <h2>Scan Medicine</h2>
-                    <p>Tecnologia Eurofarma para acessibilidade à saúde</p>
+                    <p>Tecnologia Scan Medicine para acessibilidade à saúde</p>
                 </div>
                 <div class="action-group">
                     <button class="btn btn-primary" onclick="app.setContext('user')">Área do Paciente</button>
@@ -42,10 +42,10 @@
                 </div>
                 <div class="form-grid">
                     <div class="input-wrapper">
-                        <input type="email" id="auth-email" placeholder="E-mail profissional ou pessoal" required>
+                        <input type="email" id="auth-email" placeholder="E-mail" required>
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="auth-pass" placeholder="Sua senha secreta" required>
+                        <input type="password" id="auth-pass" placeholder="Senha" required>
                     </div>
                 </div>
                 <button class="btn btn-primary" id="btn-auth-submit" onclick="app.handleAuth()">Entrar</button>
@@ -133,7 +133,7 @@
 
                 <div class="sticky-actions">
                     <button class="btn btn-primary" onclick="app.abrirFluxoPedido('Retirada')">Reservar no Balcão</button>
-                    <button class="btn btn-secondary" onclick="app.abrirFluxoPedido('Entrega')">Solicitar Tele-Entrega</button>
+                    <button class="btn btn-secondary" onclick="app.abrirFluxoPedido('Entrega')">Delivery</button>
                 </div>
                 <button class="btn-back" onclick="app.voltarParaHomeUser()">Realizar nova busca</button>
             </section>
@@ -181,7 +181,7 @@
 
             <section id="tela-home-staff" class="screen hidden">
                 <div class="screen-header">
-                    <h2>Painel Hospitalar / Farmácia</h2>
+                    <h2>Painel</h2>
                     <p>Monitore e despache os pedidos em tempo real.</p>
                 </div>
                 <div class="orders-list" id="lista-pedidos-staff">
