@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Medicine</title>
+    <link rel="stylesheet" href="eurofarma.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-viewport">
+        <header id="app-bar" class="hidden">
+            <div class="logo-area">
+                <img src="logo.png" class="app-bar-logo" alt="Logo">
+                <span class="app-title">Scan Medicine</span>
+            </div>
+            <div class="profile-area" onclick="app.toggleScreen('tela-perfil')">
+                <span id="bar-user-name">Usuário</span>
+                <img id="bar-user-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="Foto">
+            </div>
+        </header>
+
+        <main id="app-container">
+            
+            <section id="tela-tipo-usuario" class="screen">
+                <div class="brand-hero">
+                    <img src="logo.png" class="brand-logo-lg" alt="Scan Medicine Logo">
+                    <h2>Scan Medicine</h2>
+                    <p>Tecnologia Eurofarma para acessibilidade à saúde</p>
+                </div>
+                <div class="action-group">
+                    <button class="btn btn-primary" onclick="app.setContext('user')">Área do Paciente</button>
+                    <button class="btn btn-neutral" onclick="app.setContext('staff')">Portal do Funcionário</button>
+                </div>
+            </section>
+
+            <section id="tela-auth" class="screen hidden">
+                <div class="screen-header">
+                    <h2 id="auth-title">Entrar</h2>
+                    <p>Por favor, insira suas credenciais abaixo.</p>
+                </div>
+                <div class="form-grid">
+                    <div class="input-wrapper">
+                        <input type="email" id="auth-email" placeholder="E-mail profissional ou pessoal" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" id="auth-pass" placeholder="Sua senha secreta" required>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="btn-auth-submit" onclick="app.handleAuth()">Entrar</button>
+                <span class="link-alt" id="toggle-auth" onclick="app.toggleAuthMode()">Criar uma nova conta de paciente</span>
+                <button class="btn-back" onclick="app.resetToContext()">Voltar ao início</button>
+            </section>
+
+            <section id="tela-termos" class="screen hidden">
+                <div class="screen-header">
+                    <h2>Termos de Uso</h2>
+                    <p>Leia atentamente as diretrizes da nossa plataforma.</p>
+                </div>
+                <div class="termos-card">
+                    <h4>1. Propósito da Ferramenta</h4>
+                    <p>O Scan Medicine simplifica termos médicos e bulas para promover acessibilidade. Ele não substitui orientações e diagnósticos médicos.</p>
+                    <h4>2. Geolocalização</h4>
+                    <p>Buscamos o menor preço de forma integrada com as farmácias credenciadas mais próximas para sua conveniência.</p>
+                    <h4>3. Proteção e Privacidade</h4>
+                    <p>Seus dados de acessibilidade e cadastro ficam salvos localmente no dispositivo de forma segura.</p>
+                </div>
+                <button class="btn btn-primary" onclick="app.acceptTerms()">Aceitar e Continuar</button>
+            </section>
+
+            <section id="tela-home-user" class="screen hidden">
+                <div class="screen-header">
+                    <h2>Olá!</h2>
+                    <p>O que você precisa consultar hoje?</p>
+                </div>
+                <div class="menu-grid">
+                    <button class="card-option" onclick="app.openScanner()">
+                        <div class="option-icon">📷</div>
+                        <span>Escanear Caixa / Bula</span>
+                    </button>
+                    <button class="card-option" onclick="app.openSearch()">
+                        <div class="option-icon">🔍</div>
+                        <span>Pesquisar por Nome</span>
+                    </button>
+                </div>
+
+                <div id="scanner-area" class="hidden text-center">
+                    <div class="viewport-camera">
+                        <div class="scanner-laser"></div>
+                        <p>Alinhando texto...</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="app.simularScan()">Processar Imagem</button>
+                    <button class="btn-back" onclick="app.closeScanner()">Cancelar</button>
+                </div>
+
+                <div id="search-area" class="hidden">
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Ex: Amoxicilina, Dipirona...">
+                        <button class="btn-search" onclick="app.executarPesquisa()">🔍</button>
+                    </div>
+                    <p id="search-error" class="error-toast hidden">Este remédio não existe</p>
+                </div>
+            </section>
+
+            <section id="tela-remedio" class="screen hidden">
+                <div class="remedio-header">
+                    <span class="badge">Eurofarma Oficial</span>
+                    <h2 id="rem-nome">Nome do Medicamento</h2>
+                </div>
+
+                <div class="info-scroller">
+                    <div class="info-block">
+                        <h5>📋 Indicação Básica</h5>
+                        <p id="rem-descricao"></p>
+                    </div>
+                    <div class="info-block warning">
+                        <h5>⚠️ Restrições e Contraindicações</h5>
+                        <p id="rem-contra"></p>
+                    </div>
+                    <div class="info-block">
+                        <h5>💡 Dosagem e Modo de Uso</h5>
+                        <p id="rem-uso"></p>
+                    </div>
+                    <div class="price-card">
+                        <div class="price-info">
+                            <span>Melhor Preço Próximo</span>
+                            <h3 id="rem-preco">R$ 0,00</h3>
+                        </div>
+                        <button class="btn-maps" onclick="window.open('https://maps.google.com', '_blank')">📍 Ver no Maps</button>
+                    </div>
+                </div>
+
+                <div class="sticky-actions">
+                    <button class="btn btn-primary" onclick="app.abrirFluxoPedido('Retirada')">Reservar no Balcão</button>
+                    <button class="btn btn-secondary" onclick="app.abrirFluxoPedido('Entrega')">Solicitar Tele-Entrega</button>
+                </div>
+                <button class="btn-back" onclick="app.voltarParaHomeUser()">Realizar nova busca</button>
+            </section>
+
+            <section id="tela-fluxo-pedido" class="screen hidden">
+                <h2 id="pedido-titulo" class="text-center">Finalizar</h2>
+                
+                <div id="fluxo-retirada" class="hidden success-state">
+                    <div class="animated-check">✓</div>
+                    <h3>Reserva Confirmada!</h3>
+                    <p>Apresente o código abaixo no balcão da farmácia Eurofarma selecionada.</p>
+                    <div class="token-box">Código: #<span id="num-pedido-retirada">000</span></div>
+                    <button class="btn btn-primary" onclick="app.voltarParaHomeUser()">Fechar</button>
+                </div>
+
+                <div id="fluxo-entrega" class="hidden form-grid">
+                    <div class="input-wrapper">
+                        <label class="field-label">Endereço Completo</label>
+                        <input type="text" id="ent-endereco" placeholder="Rua, número, complemento">
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="field-label">Forma de Pagamento</label>
+                        <select id="ent-pagamento" onchange="app.checkTroco(this.value)">
+                            <option value="Pix">Pix (Instantâneo)</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="Dinheiro">Dinheiro em Espécie</option>
+                        </select>
+                    </div>
+                    <div id="grupo-troco" class="input-wrapper hidden">
+                        <label class="field-label">Troco para quanto?</label>
+                        <input type="text" id="ent-troco" placeholder="Ex: R$ 100,00">
+                    </div>
+                    <button class="btn btn-primary" onclick="app.finalizarPedidoEntrega()">Confirmar Pedido</button>
+                </div>
+
+                <div id="fluxo-entrega-sucesso" class="hidden success-state">
+                    <div class="animated-check">🚀</div>
+                    <h3>Pedido em Rota!</h3>
+                    <p>O entregador já foi acionado.</p>
+                    <p>Tempo médio estimado: <strong id="tempo-estimado">-- mins</strong></p>
+                    <button class="btn btn-primary" onclick="app.voltarParaHomeUser()">Início</button>
+                </div>
+            </section>
+
+            <section id="tela-home-staff" class="screen hidden">
+                <div class="screen-header">
+                    <h2>Painel Hospitalar / Farmácia</h2>
+                    <p>Monitore e despache os pedidos em tempo real.</p>
+                </div>
+                <div class="orders-list" id="lista-pedidos-staff">
+                    </div>
+            </section>
+
+            <section id="tela-perfil" class="screen hidden">
+                <div class="screen-header">
+                    <h2>Ajustes e Acessibilidade</h2>
+                </div>
+                
+                <div class="profile-card-uploader">
+                    <img id="profile-preview-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="Foto">
+                    <label for="input-avatar" class="btn-upload">Mudar foto de perfil</label>
+                    <input type="file" id="input-avatar" accept="image/*" class="hidden" onchange="app.changePhoto(event)">
+                </div>
+
+                <div class="form-grid">
+                    <div class="input-wrapper">
+                        <label class="field-label">E-mail</label>
+                        <input type="email" id="perf-email">
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="field-label">Alterar Senha</label>
+                        <input type="password" id="perf-pass" placeholder="Nova senha">
+                    </div>
+                </div>
+
+                <div class="accessibility-panel">
+                    <h4>Visualização</h4>
+                    <div class="setting-item">
+                        <span>Modo Conforto Escuro</span>
+                        <label class="switch">
+                            <input type="checkbox" id="chk-dark-mode" onchange="app.toggleDarkMode(this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Tamanho da Fonte</span>
+                        <select id="select-font-size" onchange="app.changeFontSize(this.value)">
+                            <option value="font-sm">Compacta</option>
+                            <option value="font-md" selected>Padrão</option>
+                            <option value="font-lg">Ampliada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="app.saveProfileConfig()">Salvar Preferências</button>
+                <button class="btn btn-secondary" onclick="app.logout()">Efetuar Logout</button>
+                <button class="btn-back" onclick="app.fecharPerfil()">Voltar</button>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="remedios.js"></script>
+    <script src="eurofarma.js"></script>
+</body>
+</html>
